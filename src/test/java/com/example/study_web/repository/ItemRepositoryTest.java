@@ -21,9 +21,9 @@ public class ItemRepositoryTest {
     @Test
     public void create(){
         Item item = new Item();
-        item.setName("삼성 S22");
-        item.setPrice(1300000);
-        item.setContent("최신폰");
+        item.setName("SCR2");
+        item.setPrice(500000);
+        item.setContent("자전거");
 
         Item newItem = itemRepository.save(item);
         Assertions.assertNotNull(newItem);

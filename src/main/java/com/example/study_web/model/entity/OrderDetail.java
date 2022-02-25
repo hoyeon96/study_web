@@ -23,13 +23,12 @@ public class OrderDetail {
     private LocalDateTime orderAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user; // user
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item; // user
+    private Item item; // item
 
 //    private Long userId;
 //    private Long itemId;
+
 }
