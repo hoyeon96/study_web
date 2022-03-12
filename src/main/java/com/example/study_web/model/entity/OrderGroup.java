@@ -4,29 +4,37 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
-import org.hibernate.criterion.Order;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class OrderDetail {
+@ToString(exclude = "orderDetailList")
+public class OrderGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     private String status;
 
-    private LocalDateTime arrivalDate;
+    private String orderType;
 
-    private Integer quantity;
+    private String revAddress;
+
+    private String revName;
+
+    private String paymentType;
 
     private Integer totalPrice;
+
+    private Integer totalQuantity;
+
+    private LocalDateTime orderAt;
 
     private LocalDateTime createdAt;
 
@@ -36,14 +44,12 @@ public class OrderDetail {
 
     private String updatedBy;
 
-    @ManyToOne
-    private OrderGroup orderGroup; // user - orderGroup
+// create Test
+//    private Long UserId;
 
     @ManyToOne
-    private Item item; // item
+    private User user; // user
 
-// Create test
-//    private Long orderHistoryId;
-//    private Long itemId;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderGroup")
+    private List<OrderDetail> orderDetailList;
 }

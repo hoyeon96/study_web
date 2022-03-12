@@ -1,6 +1,7 @@
 package com.example.study_web.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,29 +12,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@ToString(exclude = "orderDetailList")
-public class Item {
-
+@ToString(exclude = "partnerList")  // stackOverFlow 오류 해결방법
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    private String status;
-
-    private String name;
+    private String type;
 
     private String title;
-
-    private String content;
-
-    private Integer price;
-
-    private LocalDateTime registeredAt;
-
-    private LocalDateTime unregisteredAt;
 
     private LocalDateTime createdAt;
 
@@ -43,12 +33,7 @@ public class Item {
 
     private String updatedBy;
 
-    // create 테스트 용
-//    private Long partnerId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    private List<Partner> partnerList;
 
-    @ManyToOne
-    private Partner partner; // partner
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
-    private List<OrderDetail> orderDetailList;
 }

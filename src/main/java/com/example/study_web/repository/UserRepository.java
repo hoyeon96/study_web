@@ -16,4 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // select * from user where 1=1 and account = ??? and email = ???
     Optional<User> findByAccountAndEmail(String account, String email);
+
 }

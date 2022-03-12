@@ -1,11 +1,10 @@
 package com.example.study_web.repository;
 
-import com.example.study_web.model.entity.Student;
+import com.example.study_web.model.entity.AdminUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
-
+public interface AdminUserRepository extends JpaRepository<AdminUser, Long> {
 
 }

@@ -30,11 +30,14 @@ public class UserRepositoryTest {
         User user = new User();
 
         // user.setId(); -> Auto increment -> sql error
-        user.setAccount("양정호");
-        user.setEmail("test04@gmail.com");
-        user.setPhoneNumber("010-4444-4444");
-        user.setCreateAt(LocalDateTime.now());
-        user.setCreateBy("test01");
+        user.setAccount("이승현");
+        user.setPassword("testtest");
+        user.setStatus("test");
+        user.setEmail("test05@gmail.com");
+        user.setPhoneNumber("010-5555-5555");
+        user.setRegisteredAt(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedBy("test01");
 
         User newUser = userRepository.save(user);
         System.out.println("new user info : " + newUser);
@@ -42,85 +45,86 @@ public class UserRepositoryTest {
 
     @Test
     public void read(){
-//        Optional<User> user = userRepository.findById(3L);
-//        System.out.println("new user info : " + user);
-        Optional<User> user = userRepository.findByAccount("윤호연");
-        user.ifPresent(selectUser -> {
-            // 선택된 유저 의 getOrderDetailList 정보
-            // stream() -> 추가된 컬렉션의 저장 요소를 하나씩 참조해서 람다식으로 처리할 수 있도록 해주는 반복자
-            selectUser.getOrderDetailList().stream().forEach(detail -> {
-                Item item = detail.getItem();
-                System.out.println(item);
-            });
-        });
+        Optional<User> user = userRepository.findById(3L);
+        System.out.println("new user info : " + user);
+//        Optional<User> user = userRepository.findByAccount("윤호연");
+//        user.ifPresent(selectUser -> {
+//            // 선택된 유저 의 getOrderDetailList 정보
+//            // stream() -> 추가된 컬렉션의 저장 요소를 하나씩 참조해서 람다식으로 처리할 수 있도록 해주는 반복자
+//            selectUser.getOrderDetailList().stream().forEach(detail -> {
+//                Item item = detail.getItem();
+//                System.out.println(item);
+//            });
+//        });
     }
 
     @Test
     public void userTotalShoppingPriceOutput() {
 
         // 입력 창 대신 사용
-        String account = "김태훈";
-
-        Optional<User> user = userRepository.findByAccount(account);
-
-        if(user.isPresent()){
-            user.ifPresent(selectUser -> {
-                // 해당 고객의 쇼핑내역 몇건인지
-                // selectUser.getOrderDetailList().stream().count() long타입이길래 int로 타입 변환
-                int count = (int) selectUser.getOrderDetailList().stream().count();
-
-                // 콘솔 출력 화면
-                System.out.println(account + "님의 쇼핑내역은 " + count + "건이고, 토탈 " + userTotalShoppingPrice(account) + "원을 구매하셨습니다.");
-            });
-
-            // 고객 정보가 없을 경우 출력 화면
-        } else {
-            System.out.println(account + "님은 없는 정보 입니다.");
-        }
+//        String account = "김태훈";
+//
+//        Optional<User> user = userRepository.findByAccount(account);
+//
+//        if(user.isPresent()){
+//            user.ifPresent(selectUser -> {
+//                // 해당 고객의 쇼핑내역 몇건인지
+//                // selectUser.getOrderDetailList().stream().count() long타입이길래 int로 타입 변환
+//                int count = (int) selectUser.getOrderDetailList().stream().count();
+//
+//                // 콘솔 출력 화면
+//                System.out.println(account + "님의 쇼핑내역은 " + count + "건이고, 토탈 " + userTotalShoppingPrice(account) + "원을 구매하셨습니다.");
+//            });
+//
+//            // 고객 정보가 없을 경우 출력 화면
+//        } else {
+//            System.out.println(account + "님은 없는 정보 입니다.");
+//        }
     }
 
     // 한 고객의 총 구매 가격 계산 함수
-    @Test
-    public int userTotalShoppingPrice(String account) {
-        Optional<User> user = userRepository.findByAccount(account);
-
-        // 합계를 위한 품목 당 가격 배열 선언
-        ArrayList<Integer> sumPriceList = new ArrayList<Integer>();
-
-        // 해당 고객의 총 구매 가격 합계 초기값(0원) 설정
-        int totalShoppingPrice = 0;
-
-        // 해당 고객의 구매이력에서 item 테이블의 price 값 추출해 배열에 저장
-        user.ifPresent(selectUser -> {
-            selectUser.getOrderDetailList().stream().forEach(detail -> {
-                int price = detail.getItem().getPrice();
-                sumPriceList.add(price);
-            });
-        });
+//    @Test
+//    public int userTotalShoppingPrice(String account) {
+//        Optional<User> user = userRepository.findByAccount(account);
+//
+//        // 합계를 위한 품목 당 가격 배열 선언
+//        ArrayList<Integer> sumPriceList = new ArrayList<Integer>();
+//
+//        // 해당 고객의 총 구매 가격 합계 초기값(0원) 설정
+//        int totalShoppingPrice = 0;
+//
+//        // 해당 고객의 구매이력에서 item 테이블의 price 값 추출해 배열에 저장
+//        user.ifPresent(selectUser -> {
+//            selectUser.getOrderDetailList().stream().forEach(detail -> {
+//                int price = detail.getItem().getPrice();
+//                sumPriceList.add(price);
+//            });
+//        });
 
         // 품목 당 가격 배열의 값을 합산
-        for(int i = 0; i < sumPriceList.size(); i++){
-            totalShoppingPrice += sumPriceList.get(i);
-        }
+//        for(int i = 0; i < sumPriceList.size(); i++){
+//            totalShoppingPrice += sumPriceList.get(i);
+//        }
+//
+//        // 합계 값 리턴
+//        return totalShoppingPrice;
 
-        // 합계 값 리턴
-        return totalShoppingPrice;
-
-    }
+//    }
 
     // 전체 조회
-    @Test
-    public void allUserSearch(){
-
-        List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC,"id"));
-        for(User user : users){
-            System.out.println(user.getId() + " " + user.getAccount() + " " + userTotalShoppingPrice(user.getAccount()) + "원");
-        }
-    }
+//    @Test
+//    public void allUserSearch(){
+//
+//        List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC,"id"));
+//        for(User user : users){
+//            System.out.println(user.getId() + " " + user.getAccount() + " " + userTotalShoppingPrice(user.getAccount()) + "원");
+//        }
+//    }
 
     // TOP 3 구매순위 조회
     @Test
     public void top3Shopping(){
+
 
         // Top 구매력 3인 예시
         // 1등 5번의 윤호연 고객님
@@ -133,8 +137,8 @@ public class UserRepositoryTest {
         Optional<User> user = userRepository.findById(3L);
         user.ifPresent(selectUser-> {
             selectUser.setAccount("aaaaa");
-            selectUser.setUpdateAt(LocalDateTime.now());
-            selectUser.setUpdateBy("updateTest");
+            selectUser.setUpdatedAt(LocalDateTime.now());
+            selectUser.setUpdatedBy("updateTest");
             userRepository.save(selectUser);
         });
     }

@@ -1,6 +1,8 @@
 package com.example.study_web.repository;
 
 import com.example.study_web.model.entity.Item;
+import com.example.study_web.model.entity.Partner;
+import com.example.study_web.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Commit;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @DataJpaTest
@@ -21,9 +24,14 @@ public class ItemRepositoryTest {
     @Test
     public void create(){
         Item item = new Item();
-        item.setName("SCR2");
-        item.setPrice(500000);
-        item.setContent("자전거");
+
+//        item.setPartnerId(4L);
+        item.setName("GARDE");
+        item.setStatus("test");
+        item.setTitle("백팩");
+        item.setPrice(250000);
+        item.setCreatedAt(LocalDateTime.now());
+        item.setCreatedBy("test01");
 
         Item newItem = itemRepository.save(item);
         Assertions.assertNotNull(newItem);
@@ -31,7 +39,8 @@ public class ItemRepositoryTest {
 
     @Test
     public void read(){
-        Optional<Item> item = itemRepository.findById(1L);
+        Optional<Item> item = itemRepository.findByName("ALTAR");
+        System.out.println("item info : " + item);
         Assertions.assertTrue(item.isPresent());
     }
 
