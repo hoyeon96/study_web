@@ -27,7 +27,7 @@ public class ItemRepositoryTest {
 
 //        item.setPartnerId(4L);
         item.setName("GARDE");
-        item.setStatus("test");
+        item.setStatus("UNREGISTERED");
         item.setTitle("백팩");
         item.setPrice(250000);
         item.setCreatedAt(LocalDateTime.now());

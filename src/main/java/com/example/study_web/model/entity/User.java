@@ -1,9 +1,11 @@
 package com.example.study_web.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor  // 파라미터가 없는 기본 생성자를 생성해줌 /생성자를 빈 값으로 초기화
 @Entity // JPA 객체 맵핑
 @ToString(exclude = "orderGroupList")
+@Builder
+@Accessors(chain = true)       // 일일이 setMethod를 여러 줄로 생성할 필요 없이 Chain형태로 이어서 원하는 setMethod를 생성할 수 있다.
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +38,16 @@ public class User {
 
     private LocalDateTime unregisteredAt;
 
+    @CreatedDate
     private LocalDateTime createdAt;
 
+    @CreatedBy
     private String createdBy;
 
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @LastModifiedBy
     private String updatedBy;
 
     // 1:N 매칭 되는 1이 지칭하는 테이블 작업

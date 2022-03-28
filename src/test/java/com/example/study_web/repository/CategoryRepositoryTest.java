@@ -2,12 +2,11 @@ package com.example.study_web.repository;
 
 
 import com.example.study_web.model.entity.Category;
-import com.example.study_web.model.entity.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 
 import java.time.LocalDateTime;
@@ -25,12 +24,14 @@ public class CategoryRepositoryTest {
     public void create() {
         Category category = new Category();
 
-        category.setType("test1");
-        category.setTitle("건강식품");
+        category.setType("COMPUTER");
+        category.setTitle("컴퓨터");
         category.setCreatedAt(LocalDateTime.now());
         category.setCreatedBy("");
 
         Category newCategory = categoryRepository.save(category);
+
+        Assertions.assertNotNull(newCategory);
         System.out.println("new category info : " + newCategory);
     }
 
@@ -65,12 +66,12 @@ public class CategoryRepositoryTest {
         });
     }
 
-    @Test
-    public void delete(){
-        Optional<Category> category = categoryRepository.findById(1L);
-        category.ifPresent(selectCategory-> {
-            categoryRepository.delete(selectCategory);
-        });
-    }
+//    @Test
+//    public void delete(){
+//        Optional<Category> category = categoryRepository.findById(1L);
+//        category.ifPresent(selectCategory-> {
+//            categoryRepository.delete(selectCategory);
+//        });
+//    }
 
 }
