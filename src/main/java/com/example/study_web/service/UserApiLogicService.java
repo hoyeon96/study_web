@@ -13,12 +13,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse> {
+public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse>{
 
     private final UserRepository userRepository;
 
     @Override
-    public Header<UserApiResponse> create(Header<UserApiRequest> request){
+    public Header<UserApiResponse> create(Header<UserApiRequest> request) {
         UserApiRequest userApiRequest = request.getData();
         User user = User.builder()
                 .account(userApiRequest.getAccount())
@@ -28,14 +28,14 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
                 .phoneNumber(userApiRequest.getPhoneNumber())
                 .registeredAt(userApiRequest.getRegisteredAt())
                 .build();
-
         User newUser = userRepository.save(user);
+
         return response(newUser);
     }
 
     @Override
     public Header<UserApiResponse> read(Long id) {
-        return userRepository.findById(id).map(user -> response(user)).orElseGet(() -> Header.ERROR("데이터 없음"));
+        return userRepository.findById(id).map(user -> response(user)).orElseGet(()->Header.ERROR("데이터없음"));
     }
 
     @Override
@@ -68,10 +68,10 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
     public Header delete(Long id) {
         Optional<User> optional = userRepository.findById(id);
 
-        return optional.map(user -> {
-            userRepository.delete(user);
-            return Header.OK();
-        })
+        return optional.map(user ->{
+                    userRepository.delete(user);
+                    return Header.OK();
+                })
                 .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
