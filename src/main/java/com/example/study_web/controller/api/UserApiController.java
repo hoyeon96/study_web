@@ -38,7 +38,7 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
     }
 
     @Override
-    @DeleteMapping// /api/user/{id}
+    @DeleteMapping("{id}")// /api/user/{id}
     public Header delete(@PathVariable(name = "id") Long id) {
         log.info("delete : {}",id);
         return userApiLogicService.delete(id);

@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor  // 파라미터가 없는 기본 생성자를 생성해줌 /생성자를 빈 값으로 초기화
 @Entity // JPA 객체 맵핑
 @ToString(exclude = "orderGroupList")
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 @Accessors(chain = true)       // 일일이 setMethod를 여러 줄로 생성할 필요 없이 Chain형태로 이어서 원하는 setMethod를 생성할 수 있다.
 public class User {
